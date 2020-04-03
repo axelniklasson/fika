@@ -13,5 +13,5 @@ cd ../client
 echo "Building client"
 yarn && yarn build
 echo "Restarting nginx"
-systemctl restart nginx
+sudo systemctl restart nginx
 echo "Done!"
