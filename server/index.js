@@ -13,4 +13,4 @@ app.use(cors())
 app.get('/', (req, res) => res.json({message: 'Hello from fika-server'}))
 
 // launch app
-app.listen(port, () => console.log(`${appName} listening at http://localhost:${port}`))
+app.listen(port, '0.0.0.0', () => console.log(`${appName} listening at http://localhost:${port}`))

@@ -1,6 +1,6 @@
 import React from 'react'
-import Ping from './containers/Ping'
+import Home from './containers/Home'
 
 export default function Root() {
-    return <Ping />
+    return <Home />
 }

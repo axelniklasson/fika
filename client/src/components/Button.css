@@ -1,0 +1,15 @@
+button.primary {
+    background: yellow;
+    padding: 10px 25px;
+    border-radius: 10px;
+    color: blue;
+    font-size: 1.2em;
+}
+
+button.secondary {
+    background: blue;
+    padding: 10px 25px;
+    border-radius: 10px;
+    color: yellow;
+    font-size: 1.2em;
+}
