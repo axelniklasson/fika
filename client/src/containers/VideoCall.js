@@ -1,13 +1,14 @@
 import React from 'react'
-import Button from '../components/Button'
 import Peer from 'peerjs'
 
 import './VideoCall.css'
 import { useLocation, useHistory } from 'react-router-dom'
+import { isMobileOrTablet } from '../utils'
 
-const VIDEO_DIMENSIONS = {
-    width: 297,
-    height: 528,
+const isDesktop = !isMobileOrTablet()
+const VIDEO_CAPTURE_DIMENSIONS = {
+    width: isDesktop ? { min: 270, max: 270 } : 297,
+    height: isDesktop ? { min: 480, max: 480 } : 528,
 }
 
 export default function VideoCall() {
@@ -21,14 +22,11 @@ export default function VideoCall() {
     const getUserMedia = navigator.mediaDevices?.getUserMedia
 
     React.useEffect(() => {
-        if (!peer) {
+        if (!peer || !match?.isLeader) {
             return
         }
         getUserMedia({
-            video: {
-                width: { min: 270, max: 270 },
-                height: { min: 480, max: 480 },
-            },
+            video: VIDEO_CAPTURE_DIMENSIONS,
             audio: true,
         })
             .then((stream) => {
@@ -43,20 +41,16 @@ export default function VideoCall() {
     }, [peer])
 
     React.useEffect(() => {
-        const { match, clientId } = location.state || {}
+        const { match, clientId, isLeader } = location.state || {}
         if (!match || !clientId) {
             history.push('/setup')
         }
         const peer = new Peer(clientId)
         setMatch(match)
-        console.log(peer)
 
         peer.on('call', (call) => {
             getUserMedia({
-                video: {
-                    width: { min: 270, max: 270 },
-                    height: { min: 480, max: 480 },
-                },
+                video: VIDEO_CAPTURE_DIMENSIONS,
                 audio: true,
             })
                 .then((stream) => {
@@ -85,10 +79,16 @@ export default function VideoCall() {
     return (
         <div id="wrapper">
             <div id="videos-wrapper">
-                <video ref={sendingVideo} autoPlay id="sendingVideo"></video>
+                <video
+                    ref={sendingVideo}
+                    autoPlay
+                    playsInline
+                    id="sendingVideo"
+                ></video>
                 <video
                     ref={receivingVideo}
                     autoPlay
+                    playsInline
                     id="receivingVideo"
                 ></video>
             </div>

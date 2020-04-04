@@ -1,7 +1,5 @@
 html {
     background-color: rgba(39, 200, 245, 0.8);
-    height: 100vh;
-    width: 100vw;
 }
 
 body {
@@ -11,13 +9,11 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    height: 100%;
-    width: 100%;
 }
 
 #root {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 input {

@@ -34,10 +34,13 @@ export default function Match() {
             setMessages(messages)
         })
 
-        _socket.on('match_successful', ({ receiverClientId, name }) => {
-            setIsLoading(false)
-            setMatch({ clientId: receiverClientId, name })
-        })
+        _socket.on(
+            'match_successful',
+            ({ receiverClientId, name, isLeader }) => {
+                setIsLoading(false)
+                setMatch({ clientId: receiverClientId, name, isLeader })
+            }
+        )
 
         setSocket(_socket)
     }, [])

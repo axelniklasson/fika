@@ -61,6 +61,7 @@ io.on('connection', (socket) => {
                     {
                         receiverClientId: oldClient.clientId,
                         name: oldClient.name,
+                        isLeader: false,
                     }
                 )
                 io.sockets.sockets[oldClient.socketId].emit(
@@ -68,6 +69,7 @@ io.on('connection', (socket) => {
                     {
                         receiverClientId: newClient.clientId,
                         name: newClient.name,
+                        isLeader: true,
                     }
                 )
 
@@ -106,17 +108,6 @@ io.on('connection', (socket) => {
                 messages: messages[sessionId],
             })
         })
-        // io.emit('update', { messages })
-    })
-
-    // video call stuff
-    socket.on('set_peer_id', ({ peerId, clientId }) => {
-        clients[clientId].peerId = peerId
-    })
-
-    socket.on('get_peer_id', ({ clientId, matchClientId }) => {
-        const receiverPeerId = clients[matchClientId].peerId || 'UNSET'
-        io.emit('get_receiver_peer_id', { receiverPeerId })
     })
 
     // handle disconnect
