@@ -6,10 +6,12 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { isMobile } from '../utils'
 
 const isDesktop = !isMobile()
-const VIDEO_CAPTURE_DIMENSIONS = {
-    width: isDesktop ? { min: 270, max: 270 } : 297,
-    height: isDesktop ? { min: 480, max: 480 } : 528,
-}
+const VIDEO_CAPTURE_DIMENSIONS = isDesktop
+    ? {
+          width: { min: 270, max: 270 },
+          height: { min: 480, max: 480 },
+      }
+    : true
 
 export default function VideoCall() {
     const [peer, setPeer] = React.useState(null)
