@@ -3,9 +3,9 @@ import Peer from 'peerjs'
 
 import './VideoCall.css'
 import { useLocation, useHistory } from 'react-router-dom'
-import { isMobileOrTablet } from '../utils'
+import { isMobile } from '../utils'
 
-const isDesktop = !isMobileOrTablet()
+const isDesktop = !isMobile()
 const VIDEO_CAPTURE_DIMENSIONS = {
     width: isDesktop ? { min: 270, max: 270 } : 297,
     height: isDesktop ? { min: 480, max: 480 } : 528,

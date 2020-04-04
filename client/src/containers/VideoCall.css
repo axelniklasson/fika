@@ -16,7 +16,6 @@ video {
     background: white;
 }
 
-/* 9: 16 */
 video#sendingVideo {
     width: 90px;
     height: 160px;
@@ -32,8 +31,6 @@ video#sendingVideo {
 video#receivingVideo {
     width: 100%;
     height: 100%;
-    /* width: 297px;
-    height: 528px; */
 }
 
 #closeWrapper {
