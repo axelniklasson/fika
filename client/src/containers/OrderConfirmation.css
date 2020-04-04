@@ -1,4 +1,5 @@
-#inputWrappers {
-    padding: 0 20px;
-    width: 100%;
+.instruction {
+    padding: 20px;
+    display: flex;
+    align-items: center;
 }

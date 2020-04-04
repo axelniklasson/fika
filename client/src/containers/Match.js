@@ -54,52 +54,57 @@ export default function Match() {
         setMessage('')
     }
 
-    if (isLoading) {
-        return <p>Waiting for a match</p>
-    }
-
     return (
         <div className="wrapper" id="match">
-            <h1>Match</h1>
-            <p>
-                Connected to {match.name}, {match.clientId}
-            </p>
+            {isLoading && <p>Finding your fika partner...</p>}
 
-            <div id="messages">
-                {messages.map((msg) => (
-                    <div
-                        key={msg.timestamp}
-                        className={classNames({
-                            messageWrapper: true,
-                            sent: msg.clientId === clientId,
-                            received: msg.clientId !== clientId,
-                        })}
-                    >
-                        <span className="message">{msg.message}</span>
-                        <span className="timestamp">
-                            {moment(msg.timestamp).fromNow()}
-                        </span>
+            {!isLoading && (
+                <>
+                    <div className="content">
+                        <h1 className="heading">
+                            You will have a fika with {match.name}
+                        </h1>
+                        <p>
+                            Get to know each other in the chat below or start
+                            you virtual fika!
+                        </p>
                     </div>
-                ))}
-            </div>
-
-            <div id="inputWrapper">
-                <input
-                    placeholder="what do you wanna say?"
-                    onChange={onInputChange}
-                    value={message}
-                ></input>
-                <Button text=">" onClick={sendMessage} />
-            </div>
-            <Button
-                text="Get started"
-                onClick={() =>
-                    history.push('/video-call', {
-                        match,
-                        clientId: clientId,
-                    })
-                }
-            />
+                    <div id="messages">
+                        {messages.map((msg) => (
+                            <div
+                                key={msg.timestamp}
+                                className={classNames({
+                                    messageWrapper: true,
+                                    sent: msg.clientId === clientId,
+                                    received: msg.clientId !== clientId,
+                                })}
+                            >
+                                <span className="message">{msg.message}</span>
+                                <span className="timestamp">
+                                    {moment(msg.timestamp).fromNow()}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    <div id="inputWrapper">
+                        <input
+                            placeholder="what do you wanna say?"
+                            onChange={onInputChange}
+                            value={message}
+                        ></input>
+                        <Button text=">" onClick={sendMessage} />
+                    </div>
+                    <Button
+                        text="Start virtual fika"
+                        onClick={() =>
+                            history.push('/video-call', {
+                                match,
+                                clientId: clientId,
+                            })
+                        }
+                    />
+                </>
+            )}
         </div>
     )
 }

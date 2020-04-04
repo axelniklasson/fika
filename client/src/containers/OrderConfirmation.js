@@ -4,6 +4,16 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import './OrderConfirmation.css'
 
+const instructions = [
+    { text: 'Arrives in 15 minutes', icon: null },
+    { text: 'Dropped outside of your door', icon: null },
+    {
+        text:
+            'Please leave the money in cash outside of the door or Swish it to 0701234567',
+        icon: null,
+    },
+]
+
 export default function OrderConfirmation() {
     const history = useHistory()
     const location = useLocation()
@@ -20,6 +30,13 @@ export default function OrderConfirmation() {
                 <h1 className="heading">
                     Brew your coffee, your fika is on its way! 😋
                 </h1>
+            </div>
+            <div id="instructions">
+                {instructions.map(({ text }) => (
+                    <div key={text} className="instruction">
+                        {text}
+                    </div>
+                ))}
             </div>
             <Button
                 text="Set up my profile"
