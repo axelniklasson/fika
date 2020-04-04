@@ -18,13 +18,32 @@ export default function VideoCall() {
 
     const sendingVideo = React.useRef()
     const receivingVideo = React.useRef()
-    const getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
+    const getUserMedia = navigator.mediaDevices?.getUserMedia
 
     React.useEffect(() => {
-        const { match, clientId } = location.state
+        if (!peer) {
+            return
+        }
+        getUserMedia({
+            video: {
+                width: { min: 270, max: 270 },
+                height: { min: 480, max: 480 },
+            },
+            audio: true,
+        })
+            .then((stream) => {
+                const call = peer.call(match.clientId, stream)
+                sendingVideo.current.srcObject = stream
+
+                call.on('stream', (remoteStream) => {
+                    receivingVideo.current.srcObject = remoteStream
+                })
+            })
+            .catch((err) => console.log(err))
+    }, [peer])
+
+    React.useEffect(() => {
+        const { match, clientId } = location.state || {}
         if (!match || !clientId) {
             history.push('/setup')
         }
@@ -33,52 +52,30 @@ export default function VideoCall() {
         console.log(peer)
 
         peer.on('call', (call) => {
-            getUserMedia(
-                {
-                    video: {
-                        width: { min: 270, max: 270 },
-                        height: { min: 480, max: 480 },
-                    },
-                    audio: true,
+            getUserMedia({
+                video: {
+                    width: { min: 270, max: 270 },
+                    height: { min: 480, max: 480 },
                 },
-                (stream) => {
+                audio: true,
+            })
+                .then((stream) => {
                     call.answer(stream)
                     sendingVideo.current.srcObject = stream
 
                     call.on('stream', (remoteStream) => {
                         receivingVideo.current.srcObject = remoteStream
                     })
-                },
-                (err) => {
-                    console.log(err)
-                }
-            )
+                })
+                .catch((err) => console.log(err))
         })
 
         setPeer(peer)
     }, [])
 
-    const call = () => {
-        getUserMedia(
-            {
-                video: {
-                    width: { min: 270, max: 270 },
-                    height: { min: 480, max: 480 },
-                },
-                audio: true,
-            },
-            (stream) => {
-                const call = peer.call(match.clientId, stream)
-                sendingVideo.current.srcObject = stream
-
-                call.on('stream', (remoteStream) => {
-                    receivingVideo.current.srcObject = remoteStream
-                })
-            },
-            (err) => {
-                console.log(err)
-            }
-        )
+    if (!getUserMedia) {
+        alert('Unsupported browser')
+        return null
     }
 
     if (!match) {
@@ -87,8 +84,6 @@ export default function VideoCall() {
 
     return (
         <div id="wrapper">
-            <h1>VideoCall</h1>
-
             <div id="videos-wrapper">
                 <video ref={sendingVideo} autoPlay id="sendingVideo"></video>
                 <video
@@ -97,7 +92,9 @@ export default function VideoCall() {
                     id="receivingVideo"
                 ></video>
             </div>
-            <Button text="Call" onClick={call} />
+            <div id="closeWrapper" onClick={() => console.log('end fika')}>
+                <span>End fika</span>
+            </div>
         </div>
     )
 }
