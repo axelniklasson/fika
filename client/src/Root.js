@@ -1,6 +1,7 @@
 import React from 'react'
 import Home from './containers/Home'
 import Order from './containers/Order'
+import OrderDetails from './containers/OrderDetails'
 import OrderConfirmation from './containers/OrderConfirmation'
 import Setup from './containers/Setup'
 import Match from './containers/Match'
@@ -11,8 +12,11 @@ export default function Root() {
     return (
         <Router>
             <Switch>
-                <Route path="/order">
+                <Route exact path="/order">
                     <Order />
+                </Route>
+                <Route path="/order-details">
+                    <OrderDetails />
                 </Route>
                 <Route path="/order-confirmation">
                     <OrderConfirmation />
@@ -26,7 +30,7 @@ export default function Root() {
                 <Route path="/video-call">
                     <VideoCall />
                 </Route>
-                <Route path="/">
+                <Route exact path="/">
                     <Home />
                 </Route>
             </Switch>

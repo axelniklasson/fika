@@ -8,10 +8,20 @@ export default function Home() {
     const history = useHistory()
 
     return (
-        <div id="wrapper">
+        <div className="wrapper" id="home">
             <h1>FIKA</h1>
-            <Button text="Order" onClick={() => history.push('/order')} />
-            <Button text="Go to setup" onClick={() => history.push('/setup')} />
+            <div id="buttonsWrapper">
+                <Button
+                    text="Order some fika"
+                    onClick={() => history.push('/order')}
+                />
+                <span>- or -</span>
+                <Button
+                    text="Start virtual fika"
+                    primary={false}
+                    onClick={() => history.push('/setup')}
+                />
+            </div>
         </div>
     )
 }

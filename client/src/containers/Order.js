@@ -4,16 +4,38 @@ import { useHistory } from 'react-router-dom'
 
 import './Order.css'
 
+const items = [
+    { title: 'Cinnamon bun', price: '20 SEK' },
+    { title: 'Budapest pastry', price: '35 SEK' },
+    { title: 'Chocolate cake', price: '20 SEK' },
+]
+
 export default function Order() {
     const history = useHistory()
 
     return (
-        <div id="wrapper">
-            <h1>Order</h1>
-            <Button
-                text="Place order"
-                onClick={() => history.push('/order-confirmation')}
-            />
+        <div className="wrapper" id="order">
+            <div className="content">
+                <h1 className="heading">What fika would you like today? 🧁</h1>
+                <p>Click on your fika of choice</p>
+            </div>
+            <div id="items">
+                {items.map((item) => (
+                    <div
+                        key={item.title}
+                        className="item"
+                        onClick={() => history.push('/order-details', { item })}
+                    >
+                        <div>
+                            <span>{item.title}</span>
+                        </div>
+                        <div>
+                            <span id="itemPrice">{item.price}</span>
+                            <span>></span>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

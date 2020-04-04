@@ -1,15 +1,22 @@
-button.primary {
-    background: yellow;
-    padding: 10px 25px;
+button {
+    padding: 10px 50px;
     border-radius: 10px;
-    color: blue;
-    font-size: 1.2em;
+    font-size: 24px;
+    color: #000;
+    font-weight: 600;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 42px;
+}
+
+button.primary {
+    background-color: #f0f0f0;
 }
 
 button.secondary {
-    background: blue;
-    padding: 10px 25px;
-    border-radius: 10px;
-    color: yellow;
-    font-size: 1.2em;
+    background-color: transparent;
+    border: 2px solid #000000;
+}
+
+button:disabled {
+    opacity: 0.5;
 }

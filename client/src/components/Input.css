@@ -1,0 +1,16 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.inputWrapper input {
+    border: 2px solid #000000;
+    background-color: transparent;
+}
+
+.inputWrapper span {
+    font-weight: bold;
+    margin-bottom: 10px;
+}

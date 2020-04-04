@@ -1,4 +1,6 @@
-#wrapper {
+.wrapper#home {
+    background-color: var(--primary-bg-color);
+    /* background-color: rosybrown; */
     height: 100%;
     width: 100%;
     display: flex;
@@ -7,8 +9,23 @@
     flex-direction: column;
 }
 
-h1 {
+h1#title {
     font-size: 4em;
     margin-top: 0;
     margin-bottom: 25px;
+}
+
+#buttonsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttonsWrapper button {
+    margin: 20px;
+}
+
+#buttonsWrapper span {
+    font-weight: bold;
 }

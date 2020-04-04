@@ -59,7 +59,7 @@ export default function Match() {
     }
 
     return (
-        <div id="wrapper">
+        <div className="wrapper" id="match">
             <h1>Match</h1>
             <p>
                 Connected to {match.name}, {match.clientId}

@@ -1,14 +1,29 @@
-#wrapper {
-    height: 100%;
+#items {
     width: 100%;
+    padding: 0;
+}
+.item {
+    padding: 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    font-weight: 600;
+    border-top: 1px solid #a77464;
+    border-bottom: 1px solid #a77464;
 }
 
-h1 {
-    font-size: 4em;
-    margin-top: 0;
-    margin-bottom: 25px;
+.item:first-child {
+    border-bottom: none;
+}
+
+.item:last-child {
+    border-top: none;
+}
+
+.item div:first-child {
+    max-width: 50%;
+}
+
+span#itemPrice {
+    margin-right: 20px;
 }
