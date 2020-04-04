@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../components/Button'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -9,21 +9,34 @@ import './Match.css'
 
 export default function Match() {
     const history = useHistory()
+    const location = useLocation()
+    const [isLoading, setIsLoading] = React.useState(true)
     const [clientId, setClientId] = React.useState(null)
     const [socket, setSocket] = React.useState(null)
     const [message, setMessage] = React.useState('')
     const [messages, setMessages] = React.useState([])
 
+    const [match, setMatch] = React.useState({ clientId: '', name: '' })
+
     // set up chat client
     React.useEffect(() => {
+        const { name } = location.state || {}
+        if (!name) {
+            history.push('/setup')
+        }
         const _socket = socketIOClient(process.env.REACT_APP_API_BASE_URL)
-        _socket.on('setup', ({ clientId, messages }) => {
+        _socket.on('assigned_id', ({ clientId, messages }) => {
             setClientId(clientId)
-            setMessages(messages)
+            _socket.emit('identification', { clientId, name })
         })
 
         _socket.on('update', ({ messages }) => {
             setMessages(messages)
+        })
+
+        _socket.on('match_successful', ({ receiverClientId, name }) => {
+            setIsLoading(false)
+            setMatch({ clientId: receiverClientId, name })
         })
 
         setSocket(_socket)
@@ -38,9 +51,14 @@ export default function Match() {
         setMessage('')
     }
 
+    if (isLoading) {
+        return <p>Waiting for a match</p>
+    }
+
     return (
         <div id="wrapper">
             <h1>Match</h1>
+            <p>Connected to {match.name}</p>
 
             <div id="messages">
                 {messages.map((msg) => (
