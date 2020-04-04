@@ -58,7 +58,9 @@ export default function Match() {
     return (
         <div id="wrapper">
             <h1>Match</h1>
-            <p>Connected to {match.name}</p>
+            <p>
+                Connected to {match.name}, {match.clientId}
+            </p>
 
             <div id="messages">
                 {messages.map((msg) => (
@@ -88,7 +90,12 @@ export default function Match() {
             </div>
             <Button
                 text="Get started"
-                onClick={() => history.push('/video-call')}
+                onClick={() =>
+                    history.push('/video-call', {
+                        match,
+                        clientId: clientId,
+                    })
+                }
             />
         </div>
     )

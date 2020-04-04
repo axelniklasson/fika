@@ -50,31 +50,40 @@ io.on('connection', (socket) => {
     socket.on('identification', async ({ clientId, name }) => {
         const release = await mutex.acquire()
         const newClient = clients[clientId]
-        newClient.name = name
-        newClient.clientId = clientId
-        if (waitingClients.length > 0) {
-            // match clients
-            const oldClient = waitingClients.shift()
-            io.sockets.sockets[newClient.socketId].emit('match_successful', {
-                receiverClientId: oldClient.clientId,
-                name: oldClient.name,
-            })
-            io.sockets.sockets[oldClient.socketId].emit('match_successful', {
-                receiverClientId: newClient.clientId,
-                name: newClient.name,
-            })
+        try {
+            newClient.name = name
+            newClient.clientId = clientId
+            if (waitingClients.length > 0) {
+                // match clients
+                const oldClient = waitingClients.shift()
+                io.sockets.sockets[newClient.socketId].emit(
+                    'match_successful',
+                    {
+                        receiverClientId: oldClient.clientId,
+                        name: oldClient.name,
+                    }
+                )
+                io.sockets.sockets[oldClient.socketId].emit(
+                    'match_successful',
+                    {
+                        receiverClientId: newClient.clientId,
+                        name: newClient.name,
+                    }
+                )
 
-            const sessionId = uuid.v1()
-            newClient.sessionId = sessionId
-            oldClient.sessionId = sessionId
-            sessions[sessionId] = [newClient, oldClient]
-            console.log(
-                `Matched clients ${oldClient.clientId} and ${newClient.clientId} in session ${sessionId}`
-            )
-        } else {
-            waitingClients.push(newClient)
+                const sessionId = uuid.v1()
+                newClient.sessionId = sessionId
+                oldClient.sessionId = sessionId
+                sessions[sessionId] = [newClient, oldClient]
+                console.log(
+                    `Matched clients ${oldClient.clientId} and ${newClient.clientId} in session ${sessionId}`
+                )
+            } else {
+                waitingClients.push(newClient)
+            }
+        } finally {
+            release()
         }
-        release()
     })
 
     // handle message from client

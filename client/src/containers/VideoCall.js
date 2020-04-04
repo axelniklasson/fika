@@ -3,6 +3,7 @@ import Button from '../components/Button'
 import Peer from 'peerjs'
 
 import './VideoCall.css'
+import { useLocation, useHistory } from 'react-router-dom'
 
 const VIDEO_DIMENSIONS = {
     width: 297,
@@ -11,7 +12,9 @@ const VIDEO_DIMENSIONS = {
 
 export default function VideoCall() {
     const [peer, setPeer] = React.useState(null)
-    const [peerId, setPeerId] = React.useState('')
+    const history = useHistory()
+    const location = useLocation()
+    const [match, setMatch] = React.useState(null)
 
     const sendingVideo = React.useRef()
     const receivingVideo = React.useRef()
@@ -21,7 +24,13 @@ export default function VideoCall() {
         navigator.mozGetUserMedia
 
     React.useEffect(() => {
-        const peer = new Peer()
+        const { match, clientId } = location.state
+        if (!match || !clientId) {
+            history.push('/setup')
+        }
+        const peer = new Peer(clientId)
+        setMatch(match)
+        console.log(peer)
 
         peer.on('call', (call) => {
             getUserMedia(
@@ -46,7 +55,6 @@ export default function VideoCall() {
             )
         })
 
-        console.log(peer)
         setPeer(peer)
     }, [])
 
@@ -60,7 +68,7 @@ export default function VideoCall() {
                 audio: true,
             },
             (stream) => {
-                const call = peer.call(peerId, stream)
+                const call = peer.call(match.clientId, stream)
                 sendingVideo.current.srcObject = stream
 
                 call.on('stream', (remoteStream) => {
@@ -73,8 +81,8 @@ export default function VideoCall() {
         )
     }
 
-    const onChange = (evt) => {
-        setPeerId(evt.target.value)
+    if (!match) {
+        return <p>Loading</p>
     }
 
     return (
@@ -89,11 +97,6 @@ export default function VideoCall() {
                     id="receivingVideo"
                 ></video>
             </div>
-            <input
-                placeholder="peerId"
-                onChange={onChange}
-                value={peerId}
-            ></input>
             <Button text="Call" onClick={call} />
         </div>
     )
