@@ -7,16 +7,6 @@ import Money from '../assets/money.png'
 
 import './OrderConfirmation.css'
 
-const instructions = [
-    { text: 'Arrives in 15 minutes', icon: Clock },
-    { text: "You'll find it at your door", icon: Door },
-    {
-        text:
-            'Please leave the money in cash outside of the door or Swish it to 0701234567',
-        icon: Money,
-    },
-]
-
 export default function OrderConfirmation() {
     const history = useHistory()
     const location = useLocation()
@@ -27,12 +17,23 @@ export default function OrderConfirmation() {
         return null
     }
 
+    const instructions = [
+        { text: 'Arrives in 15 minutes', icon: Clock },
+        { text: "You'll find it at your door", icon: Door },
+        {
+            text: `Please leave ${item.price} in cash outside of the door or Swish it to 0701234567`,
+            icon: Money,
+        },
+    ]
+
     return (
         <div className="wrapper" id="orderConfirmation">
             <div className="content">
                 <h1 className="heading">
                     {/* eslint-disable-next-line */}
-                    Time to brew your coffee, your fika is on its way! 😋
+                    Time to brew your coffee, your{' '}
+                    <span className="lowercase">{item.title}</span> is on its
+                    way! 😋
                 </h1>
             </div>
             <div id="instructions">

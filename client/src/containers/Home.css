@@ -25,10 +25,6 @@
     margin: 0;
 }
 
-#home svg path {
-    fill: blue;
-}
-
 #buttonsWrapper {
     display: flex;
     flex-direction: column;

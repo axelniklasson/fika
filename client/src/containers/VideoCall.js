@@ -75,7 +75,7 @@ export default function VideoCall() {
 
     if (!getUserMedia) {
         alert('Unsupported browser')
-        return null
+        return history.push('/')
     }
 
     const endCall = () => {

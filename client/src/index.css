@@ -33,6 +33,10 @@ h1.heading {
     font-size: 36px;
 }
 
+.lowercase {
+    text-transform: lowercase;
+}
+
 input {
     padding: 10px;
     font-size: 1.2em;

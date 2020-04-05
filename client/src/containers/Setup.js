@@ -79,7 +79,7 @@ export default function Setup() {
                     !options.gender?.value ||
                     !(name || details?.name)
                 }
-                text="Find a buddy"
+                text="Find a fika partner"
                 onClick={() =>
                     history.push('/match', { name: name || details.name })
                 }
