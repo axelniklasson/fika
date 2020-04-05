@@ -1,3 +1,11 @@
+.wrapper#order {
+    padding: 0;
+}
+
+.wrapper#order .content {
+    padding: 0 20px;
+}
+
 #items {
     width: 100%;
     padding: 0;
@@ -26,4 +34,14 @@
 
 span#itemPrice {
     margin-right: 20px;
+}
+
+.item div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item img {
+    width: 30px;
 }

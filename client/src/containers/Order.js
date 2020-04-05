@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from '../components/Button'
 import { useHistory } from 'react-router-dom'
+import Chevron from '../assets/chevron.svg'
 
 import './Order.css'
 
@@ -16,6 +16,7 @@ export default function Order() {
     return (
         <div className="wrapper" id="order">
             <div className="content">
+                {/* eslint-disable-next-line */}
                 <h1 className="heading">What fika would you like today? 🧁</h1>
                 <p>Click on your fika of choice</p>
             </div>
@@ -31,7 +32,7 @@ export default function Order() {
                         </div>
                         <div>
                             <span id="itemPrice">{item.price}</span>
-                            <span>></span>
+                            <img src={Chevron} alt="Select" />
                         </div>
                     </div>
                 ))}

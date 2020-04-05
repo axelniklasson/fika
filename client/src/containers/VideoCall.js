@@ -43,10 +43,10 @@ export default function VideoCall() {
                 })
             })
             .catch((err) => console.log(err))
-    }, [peer])
+    }, [peer]) // eslint-disable-line react-hooks/exhaustive-deps
 
     React.useEffect(() => {
-        const { match, clientId, isLeader } = location.state || {}
+        const { match, clientId } = location.state || {}
         if (!match || !clientId) {
             history.push('/setup')
         }
@@ -71,35 +71,48 @@ export default function VideoCall() {
         })
 
         setPeer(peer)
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!getUserMedia) {
         alert('Unsupported browser')
         return null
     }
 
+    const endCall = () => {
+        peer.disconnect()
+
+        let tracks = sendingVideo.current?.srcObject?.getTracks() || []
+        tracks.map((x) => x.stop())
+        tracks = receivingVideo.current?.srcObject?.getTracks() || []
+        tracks.map((x) => x.stop())
+        history.push('/')
+    }
+
     return (
-        <div className="wrapper">
+        <div className="wrapper" id="videoCall">
             {isLoading && <Loader text="Starting up virtual fika..." />}
-            <div style={isLoading ? { display: 'none' } : {}}>
-                <div id="videos-wrapper">
-                    <video
-                        ref={sendingVideo}
-                        autoPlay
-                        playsInline
-                        id="sendingVideo"
-                    ></video>
-                    <video
-                        ref={receivingVideo}
-                        autoPlay
-                        playsInline
-                        id="receivingVideo"
-                    ></video>
-                </div>
-                <div id="closeWrapper" onClick={() => console.log('end fika')}>
-                    <Button text="End fika" onClose={() => history.push('/')} />
-                </div>
+            <div
+                style={isLoading ? { display: 'none' } : {}}
+                id="videos-wrapper"
+            >
+                <video
+                    ref={sendingVideo}
+                    autoPlay
+                    playsInline
+                    id="sendingVideo"
+                ></video>
+                <video
+                    ref={receivingVideo}
+                    autoPlay
+                    playsInline
+                    id="receivingVideo"
+                ></video>
             </div>
+            {!isLoading && (
+                <div id="closeWrapper">
+                    <Button text="End fika" onClick={endCall} />
+                </div>
+            )}
         </div>
     )
 }

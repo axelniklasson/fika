@@ -1,11 +1,11 @@
 import React from 'react'
 import Button from '../components/Button'
-import Input from '../components/Input'
 import Loader from '../components/Loader'
 import { useHistory, useLocation } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import classNames from 'classnames'
 import moment from 'moment'
+import Send from '../assets/send.svg'
 import './Match.css'
 
 const ChatInput = ({ value, onChange, onSend }) => (
@@ -20,7 +20,9 @@ const ChatInput = ({ value, onChange, onSend }) => (
                 }
             }}
         />
-        <div onClick={onSend}>></div>
+        <div onClick={onSend}>
+            <img src={Send} alt="Send" />
+        </div>
     </div>
 )
 
@@ -51,7 +53,6 @@ export default function Match() {
         _socket.on('update', ({ messages }) => {
             setMessages(messages)
             if (chat.current) {
-                // chat.current.scrollIntoView({ behavior: 'smooth' })
                 chat.current.scrollTop = chat.current.scrollHeight
             }
         })
@@ -65,7 +66,7 @@ export default function Match() {
         )
 
         setSocket(_socket)
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const onInputChange = (evt) => {
         setMessage(evt.target.value)
@@ -86,11 +87,11 @@ export default function Match() {
                 <>
                     <div className="content">
                         <h1 className="heading">
-                            You will have a fika with {match.name}
+                            Great! Your fika partner is {match.name} 😊
                         </h1>
                         <p>
                             Get to know each other in the chat below or start
-                            you virtual fika!
+                            your virtual fika now.
                         </p>
                     </div>
                     <div id="chat" ref={chat}>

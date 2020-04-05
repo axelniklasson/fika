@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../components/Button'
+import Input from '../components/Input'
 import { useHistory, useLocation } from 'react-router-dom'
 import classnames from 'classnames'
 
@@ -14,7 +15,7 @@ export const OPTIONS = {
     gender: [
         { value: 4, label: 'Man' },
         { value: 5, label: 'Woman' },
-        { value: 6, label: 'Other' },
+        { value: 6, label: 'Random' },
     ],
 }
 
@@ -46,15 +47,16 @@ export default function Setup() {
 
     const onChange = (evt) => setName(evt.target.value)
 
-    const { item, details } = location.state || {}
+    const { details } = location.state || {}
     return (
         <div className="wrapper" id="setup">
             {!details?.name && (
-                <input
+                <Input
+                    label="My name is"
                     placeholder="What's your name?"
                     value={name}
                     onChange={onChange}
-                ></input>
+                />
             )}
             <div className="content">
                 <h1 className="heading">I would like to fika with...</h1>
@@ -65,14 +67,18 @@ export default function Setup() {
                     selected={options.age?.value}
                 />
                 <Selector
-                    label="Preferably a"
+                    label="Preferably with a"
                     options={OPTIONS.gender}
                     onSelect={(gender) => setOptions({ ...options, gender })}
                     selected={options.gender?.value}
                 />
             </div>
             <Button
-                disabled={!options.age?.value || !options.gender?.value}
+                disabled={
+                    !options.age?.value ||
+                    !options.gender?.value ||
+                    !(name || details?.name)
+                }
                 text="Find a buddy"
                 onClick={() =>
                     history.push('/match', { name: name || details.name })

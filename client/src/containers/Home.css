@@ -1,6 +1,5 @@
 .wrapper#home {
     background-color: var(--primary-bg-color);
-    /* background-color: rosybrown; */
     height: 100%;
     width: 100%;
     display: flex;
@@ -9,10 +8,25 @@
     flex-direction: column;
 }
 
-h1#title {
-    font-size: 4em;
-    margin-top: 0;
-    margin-bottom: 25px;
+#headingWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home img {
+    width: 60px;
+    margin-left: 20px;
+}
+
+#home h1 {
+    font-size: 5em;
+    margin: 0;
+}
+
+#home svg path {
+    fill: blue;
 }
 
 #buttonsWrapper {

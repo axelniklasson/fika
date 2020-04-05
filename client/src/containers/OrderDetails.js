@@ -28,7 +28,8 @@ export default function OrderDetails() {
         <div className="wrapper" id="orderDetails">
             <div className="content">
                 <h1 className="heading">
-                    Where do you want your fika to be delivered? 🏠
+                    {/* eslint-disable-next-line */}
+                    Where should we deliver the fika to? 🏠
                 </h1>
             </div>
 
@@ -57,7 +58,7 @@ export default function OrderDetails() {
             </div>
 
             <Button
-                text="Start fika"
+                text="Submit address"
                 onClick={() =>
                     history.push('/order-confirmation', { item, details })
                 }
