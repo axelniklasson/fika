@@ -56,6 +56,12 @@ io.on('connection', (socket) => {
             if (waitingClients.length > 0) {
                 // match clients
                 const oldClient = waitingClients.shift()
+
+                if (!io.sockets.sockets[oldClient.socketId]) {
+                    waitingClients.push(newClient)
+                    return
+                }
+
                 io.sockets.sockets[newClient.socketId].emit(
                     'match_successful',
                     {
@@ -121,3 +127,4 @@ io.on('connection', (socket) => {
 server.listen(port, addr, () =>
     console.log(`${appName} listening at http://${addr}:${port}`)
 )
+
