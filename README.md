@@ -38,7 +38,7 @@ cd ../server && yarn && node index.js
 
 ## Hackers
 
--   [Jocelyn Chan]()
+-   [Jocelyn Chan](mailto:jocelyn.sthlm@gmail.com)
 -   [Lili Yun](https://www.linkedin.com/in/lili-yun)
 -   [Axel Niklasson](https://www.linkedin.com/in/axelniklasson)
 
