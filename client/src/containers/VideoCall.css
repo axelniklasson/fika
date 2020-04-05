@@ -12,10 +12,6 @@
     position: relative;
 }
 
-video {
-    background: white;
-}
-
 video#sendingVideo {
     width: 90px;
     height: 160px;
@@ -34,7 +30,6 @@ video#receivingVideo {
 }
 
 #closeWrapper {
-    background-color: white;
     flex-grow: 1;
     width: 100%;
     display: flex;
