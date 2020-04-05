@@ -1,9 +1,8 @@
 import React from 'react'
 import Peer from 'peerjs'
-
-import './VideoCall.css'
 import { useLocation, useHistory } from 'react-router-dom'
 import { isMobile } from '../utils'
+import './VideoCall.css'
 
 const isDesktop = !isMobile()
 const VIDEO_CAPTURE_DIMENSIONS = isDesktop
@@ -18,6 +17,7 @@ export default function VideoCall() {
     const history = useHistory()
     const location = useLocation()
     const [match, setMatch] = React.useState(null)
+    const [isLoading, setIsLoading] = React.useState(true)
 
     const sendingVideo = React.useRef()
     const receivingVideo = React.useRef()
@@ -56,6 +56,7 @@ export default function VideoCall() {
                 audio: true,
             })
                 .then((stream) => {
+                    setIsLoading(false)
                     call.answer(stream)
                     sendingVideo.current.srcObject = stream
 
@@ -80,23 +81,31 @@ export default function VideoCall() {
 
     return (
         <div id="wrapper">
-            <div id="videos-wrapper">
-                <video
-                    ref={sendingVideo}
-                    autoPlay
-                    playsInline
-                    id="sendingVideo"
-                ></video>
-                <video
-                    ref={receivingVideo}
-                    autoPlay
-                    playsInline
-                    id="receivingVideo"
-                ></video>
-            </div>
-            <div id="closeWrapper" onClick={() => console.log('end fika')}>
-                <span>End fika</span>
-            </div>
+            {isLoading && <Loader text="Finding your fika partner..." />}
+            {!isLoading && (
+                <>
+                    <div id="videos-wrapper">
+                        <video
+                            ref={sendingVideo}
+                            autoPlay
+                            playsInline
+                            id="sendingVideo"
+                        ></video>
+                        <video
+                            ref={receivingVideo}
+                            autoPlay
+                            playsInline
+                            id="receivingVideo"
+                        ></video>
+                    </div>
+                    <div
+                        id="closeWrapper"
+                        onClick={() => console.log('end fika')}
+                    >
+                        <span>End fika</span>
+                    </div>
+                </>
+            )}
         </div>
     )
 }

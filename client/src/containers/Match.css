@@ -58,6 +58,7 @@
 #chatInput input {
     padding: 0;
     flex-grow: 1;
+    border: none;
 }
 
 #chatInput div {
