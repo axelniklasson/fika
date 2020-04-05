@@ -1,11 +1,29 @@
 import React from 'react'
 import Button from '../components/Button'
+import Input from '../components/Input'
+import Loader from '../components/Loader'
 import { useHistory, useLocation } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import classNames from 'classnames'
 import moment from 'moment'
 
 import './Match.css'
+
+const ChatInput = ({ value, onChange, onSend }) => (
+    <div id="chatInput">
+        <input
+            onChange={onChange}
+            value={value}
+            placeholder="Write something here"
+            onKeyPress={(e) => {
+                if (e.key === 'Enter' && !!value) {
+                    onSend()
+                }
+            }}
+        />
+        <div onClick={onSend}>></div>
+    </div>
+)
 
 export default function Match() {
     const history = useHistory()
@@ -17,6 +35,7 @@ export default function Match() {
     const [messages, setMessages] = React.useState([])
 
     const [match, setMatch] = React.useState({ clientId: '', name: '' })
+    const chat = React.useRef()
 
     // set up chat client
     React.useEffect(() => {
@@ -32,6 +51,10 @@ export default function Match() {
 
         _socket.on('update', ({ messages }) => {
             setMessages(messages)
+            if (chat.current) {
+                // chat.current.scrollIntoView({ behavior: 'smooth' })
+                chat.current.scrollTop = chat.current.scrollHeight
+            }
         })
 
         _socket.on(
@@ -56,7 +79,7 @@ export default function Match() {
 
     return (
         <div className="wrapper" id="match">
-            {isLoading && <p>Finding your fika partner...</p>}
+            {isLoading && <Loader text="Finding your fika partner..." />}
 
             {!isLoading && (
                 <>
@@ -69,30 +92,32 @@ export default function Match() {
                             you virtual fika!
                         </p>
                     </div>
-                    <div id="messages">
-                        {messages.map((msg) => (
-                            <div
-                                key={msg.timestamp}
-                                className={classNames({
-                                    messageWrapper: true,
-                                    sent: msg.clientId === clientId,
-                                    received: msg.clientId !== clientId,
-                                })}
-                            >
-                                <span className="message">{msg.message}</span>
-                                <span className="timestamp">
-                                    {moment(msg.timestamp).fromNow()}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                    <div id="inputWrapper">
-                        <input
-                            placeholder="what do you wanna say?"
+                    <div id="chat" ref={chat}>
+                        <div id="messages">
+                            {messages.map((msg) => (
+                                <div
+                                    key={msg.timestamp}
+                                    className={classNames({
+                                        messageWrapper: true,
+                                        sent: msg.clientId === clientId,
+                                        received: msg.clientId !== clientId,
+                                    })}
+                                >
+                                    <span className="name">{msg.name}</span>
+                                    <span className="message">
+                                        {msg.message}
+                                    </span>
+                                    <span className="timestamp">
+                                        {moment(msg.timestamp).fromNow()}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <ChatInput
                             onChange={onInputChange}
                             value={message}
-                        ></input>
-                        <Button text=">" onClick={sendMessage} />
+                            onSend={sendMessage}
+                        />
                     </div>
                     <Button
                         text="Start virtual fika"
