@@ -29,15 +29,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-    height: 100vh;
-    width: 100vw;
-}
-
-.content {
-    /* padding: 0 20px; */
-}
-
 h1.heading {
     font-size: 36px;
 }
