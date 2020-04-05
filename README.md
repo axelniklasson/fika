@@ -1,10 +1,11 @@
 # FIKA
 
-Contribution to [Hack the Crisis 2020](https://www.hackthecrisis.se/).
-
-<img src="https://via.tt.se/data/images/00237/97ceccdd-1d60-4a8e-b7e2-9c181ce25935-w_720.png" width="200" height="200" />
-
 ## What is FIKA?
+
+[![alt text](https://raw.githubusercontent.com/axelniklasson/fika/master/static/fika.png)](https://youtu.be/twsrmRLMc0o)
+
+
+FIKA is a web application that enables people to easily enjoy a typical Sweish fika virtually, which is especially important during the COVID-19 crisis.
 
 > To fika is to have a short coffee break, often with cookies or pastries, and you can (and should) have several per day.
 
@@ -40,3 +41,7 @@ cd ../server && yarn && node index.js
 -   [Jocelyn Chan]()
 -   [Lili Yun](https://www.linkedin.com/in/lili-yun)
 -   [Axel Niklasson](https://www.linkedin.com/in/axelniklasson)
+
+Contribution to [Hack the Crisis 2020](https://www.hackthecrisis.se/).
+
+<img src="https://raw.githubusercontent.com/axelniklasson/fika/master/static/hack_the_crisis.png" width="200" height="200" />
