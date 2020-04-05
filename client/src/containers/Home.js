@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../components/Button'
 import { useHistory } from 'react-router-dom'
-import CoffeeCup from '../assets/coffe_cup.svg'
+import CoffeeCup from '../assets/coffee_cup.png'
 
 import './Home.css'
 
