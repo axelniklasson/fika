@@ -2,12 +2,11 @@
 
 ## What is FIKA?
 
-[![alt text](https://raw.githubusercontent.com/axelniklasson/fika/master/static/fika.png)](https://youtu.be/twsrmRLMc0o)
-
-
-FIKA is a web application that enables people to easily enjoy a typical Sweish fika virtually, which is especially important during the COVID-19 crisis.
+[![FIKA trailer](https://raw.githubusercontent.com/axelniklasson/fika/master/static/fika.png)](https://youtu.be/twsrmRLMc0o)
 
 > To fika is to have a short coffee break, often with cookies or pastries, and you can (and should) have several per day.
+
+FIKA is a web application that enables people to easily enjoy a typical Swedish fika virtually, which is especially important during the COVID-19 crisis.
 
 ### Features
 
